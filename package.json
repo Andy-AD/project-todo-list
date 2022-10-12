@@ -1,0 +1,29 @@
+{
+  "name": "project-todo-list",
+  "version": "1.0.0",
+  "description": "A project to practice skills in OOP principles in JS.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "start": "webpack serve --open",
+    "watch": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Andy-AD/project-todo-list.git"
+  },
+  "author": "Andrii Dovhaliuk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Andy-AD/project-todo-list/issues"
+  },
+  "homepage": "https://github.com/Andy-AD/project-todo-list#readme",
+  "devDependencies": {
+    "css-loader": "^6.7.1",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.11.1"
+  }
+}
