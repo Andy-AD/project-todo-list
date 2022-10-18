@@ -1,3 +1,5 @@
+import { add } from "date-fns";
+
 const mainContent = document.getElementById('content');
 
 
@@ -30,7 +32,7 @@ function loadOnStart() {
     sidebarProjectsHeader.textContent = 'Projects';
     const sidebarProjectsList = document.createElement('ul');
     sidebarProjectsList.setAttribute('id', 'projects');
-    
+
     div2.appendChild(sidebarProjectsHeader);
     div2.appendChild(sidebarProjectsList);
 
@@ -55,23 +57,94 @@ function loadOnStart() {
     const taskContainerDiv = document.createElement('div');
     taskContainerDiv.classList.add('task-container');
 
+    const addTaskModalDiv = document.createElement('div');
+    addTaskModalDiv.classList.add('add-new-task-modal');
+
+    const addTaskDiv = document.createElement('div');
+    addTaskDiv.classList.add('add-task');
+    const closeSpan = document.createElement('span');
+    closeSpan.classList.add('close');
+    closeSpan.textContent = 'x';
+    const modalTaskHeader = document.createElement('h2');
+    modalTaskHeader.textContent = 'Add new task';
+    const createTaskForm = document.createElement('form');
+    createTaskForm.setAttribute('id', 'create-task');
+    createTaskForm.setAttribute('action', 'post');
+    createTaskForm.setAttribute('method', 'post');
+    const labelForTitle = document.createElement('label');
+    labelForTitle.setAttribute('for', 'add-title');
+    labelForTitle.textContent = 'Title:';
+    const inputTitle = document.createElement('input');
+    inputTitle.setAttribute('type', 'text');
+    inputTitle.setAttribute('id', 'add-title');
+    inputTitle.setAttribute('required', '');
+    inputTitle.setAttribute('name', 'title');
+    const labelForDueDate = document.createElement('label');
+    labelForDueDate.textContent = 'Due date:';
+    labelForDueDate.setAttribute('for', 'due-date');
+    const inputDueDate = document.createElement('input');
+    inputDueDate.setAttribute('type', 'date');
+    inputDueDate.setAttribute('name', 'due-date');
+    inputDueDate.setAttribute('id', 'due-date');
+    inputDueDate.setAttribute('required', '');
+    const labelForPriority = document.createElement('label');
+    labelForPriority.setAttribute('for', 'priority');
+    labelForPriority.textContent = 'Priority:';
+    const selectPriority = document.createElement('select');
+    selectPriority.setAttribute('name', 'priority');
+    selectPriority.setAttribute('id', 'priority');
+    const optionLowPriority = document.createElement('option');
+    optionLowPriority.setAttribute('value', 'low');
+    optionLowPriority.textContent = 'Low';
+    optionLowPriority.setAttribute('selected', '');
+    const optionMediumPriority = document.createElement('option');
+    optionMediumPriority.setAttribute('value', 'medium');
+    optionMediumPriority.textContent = 'Medium';
+    const optionHighPriority = document.createElement('option');
+    optionHighPriority.setAttribute('value', 'high');
+    optionHighPriority.textContent = 'High';
+    selectPriority.appendChild(optionLowPriority);
+    selectPriority.appendChild(optionMediumPriority);
+    selectPriority.appendChild(optionHighPriority);
+    const labelForDescription = document.createElement('label');
+    labelForDescription.setAttribute('for', 'description');
+    labelForDescription.textContent = 'Description:'
+    const textArea = document.createElement('textarea');
+    textArea.setAttribute('name', 'description');
+    textArea.setAttribute('id', 'description');
+    textArea.setAttribute('cols', '30');
+    textArea.setAttribute('rows', '5');
+    const submitFormButton = document.createElement('button');
+    submitFormButton.textContent = 'Add task';
+    submitFormButton.setAttribute('id', 'submit');
+    createTaskForm.appendChild(labelForTitle);
+    createTaskForm.appendChild(inputTitle);
+    createTaskForm.appendChild(labelForDueDate);
+    createTaskForm.appendChild(inputDueDate);
+    createTaskForm.appendChild(labelForPriority);
+    createTaskForm.appendChild(selectPriority);
+    createTaskForm.appendChild(labelForDescription);
+    createTaskForm.appendChild(textArea);
+    createTaskForm.appendChild(submitFormButton);
+    addTaskDiv.appendChild(closeSpan);
+    addTaskDiv.appendChild(modalTaskHeader);
+    addTaskDiv.appendChild(createTaskForm);
+    addTaskModalDiv.appendChild(addTaskDiv);
+
     mainContent.appendChild(sidebarDiv);
     mainContent.appendChild(addTaskBarDiv);
     mainContent.appendChild(taskContainerDiv);
+    mainContent.appendChild(addTaskModalDiv)
 }
 
-const addTaskModalDiv = document.createElement('div');
-addTaskModalDiv.classList.add('add-new-task-modal');
+function showModalForTask() {
+    document.getElementsByClassName('add-new-task-modal')[0].style.display = "flex";
+}
 
-const addTaskDiv = document.createElement('div');
-addTaskDiv.classList.add('add-task');
-const closeSpan = document.createElement('span');
-closeSpan.classList.add('close');
-closeSpan.textContent = '&times;'
-
-
-addTaskModalDiv.appendChild(addTaskDiv);
+function closeAndClearModalForTask() {
+    document.getElementsByClassName('add-new-task-modal')[0].style.display = "none";
+}
 
 
-export {loadOnStart};
+export { loadOnStart, showModalForTask, closeAndClearModalForTask    };
 
