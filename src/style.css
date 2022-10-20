@@ -1,0 +1,255 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+body {
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    height: 80px;
+    border-bottom: 1px solid black;
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    grid-template-rows: 80px;
+    justify-items: center;
+    align-items: center;
+}
+
+header>h1 {
+    grid-area: 1 / 1 / -1 / -1;
+    font-size: 2.5em;
+    background-color: lightgreen;
+    padding: 10px 50px;
+    border-radius: 50%;
+}
+
+.menu-icon {
+    grid-area: 1 / 1 / -1 / 2;
+}
+
+.menu-icon:hover {
+    cursor: pointer;
+}
+
+.menu-icon>div {
+    width: 35px;
+    height: 5px;
+    background-color: black;
+    margin: 6px 0;
+}
+
+main {
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    grid-template-rows: 60px 1fr;
+}
+
+.sidebar {
+    grid-area: 1 / 1 / -1 / 2;
+    background-color: beige;
+}
+
+.sidebar>div {
+    width: 100%;
+    padding: 20px;
+}
+
+.sidebar h2 {
+    font-size: 1.8em;
+    border-bottom: 1px solid black;
+}
+
+.sidebar li {
+    display: flex;
+    align-items: center;
+    font-size: 1.5em;
+    width: 90%;
+    border-radius: 5px;
+    margin: 10px 10px;
+    padding: 5px;
+    list-style: none;
+    user-select: none;
+}
+
+#projects img {
+    margin-right: 10px;
+}
+
+.sidebar li:hover { 
+    cursor: pointer;
+    background-color: white;
+}
+
+.active {
+    background-color: lightgreen;
+    color: black;
+}
+
+.add-task-bar {
+    grid-area: 1 / 2 / 2 / -1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 20px;
+}
+
+.add-task-bar button {
+    background-color: lightgreen;
+    width: 150px;
+    font-size: 1.4em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 10px;
+    margin-right: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    outline: none;
+}
+
+.task-container {
+    grid-area: 2 / 2 / -1 / -1;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+
+.task {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.task:hover {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.main {
+    background-color: rgb(196, 247, 196);
+    color: black;
+    border-bottom: 1px solid black;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto auto auto;
+    grid-template-rows: auto;
+    align-items: center;
+    padding: 5px;
+}
+
+.main:hover {
+    cursor: pointer;
+}
+
+.details {
+    display: flex;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.priority-low {
+    border-left: 5px solid green;
+}
+
+.priority-medium {
+    border-left: 5px solid orange;
+}
+
+.priority-high {
+    border-left: 5px solid red;
+}
+
+footer {
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-task,
+.modal-project {
+    display: none;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.add-task,
+.add-project {
+    position: relative;
+    height: auto;
+    width: 60%; 
+    border-radius: 10px;
+    border: 2px lightgreen solid;
+    background-color: white;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#create-task {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-task h2,
+.add-project h2 {
+    font-size: 2em;
+    align-self: center;
+    padding: 5px 0 20px 0;
+}
+
+.add-task label {
+    font-size: 1.2em;
+    margin: 10px 0 5px 0;
+    font-weight: 600;
+}
+
+.add-task input,
+.add-task select,
+.add-task textarea,
+.add-project input {
+    padding: 5px;
+    font-size: 1.2em;
+}
+
+.add-task button,
+.add-project button {
+    width: 200px;
+    margin: 10px auto;
+    padding: 5px;
+    border-radius: 5px;
+    outline: none;
+    background-color: lightgreen;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.close {
+    color: #6e6c6c;
+    font-size: 40px;
+    font-weight: bold;
+    position: absolute;
+    right: 2%;
+    top: 2%;
+    cursor: pointer;
+}
