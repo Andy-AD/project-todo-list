@@ -49,6 +49,7 @@ function loadOnStart() {
     addTaskButton.appendChild(plusIcon);
     addTaskButton.textContent = 'New task';
     const addProjectButton = document.createElement('button');
+    addProjectButton.classList.add('new-project-button');
     addProjectButton.appendChild(plusIcon);
     addProjectButton.textContent = 'New project';
     addTaskBarDiv.appendChild(addTaskButton);
@@ -57,8 +58,8 @@ function loadOnStart() {
     const taskContainerDiv = document.createElement('div');
     taskContainerDiv.classList.add('task-container');
 
-    const addTaskModalDiv = document.createElement('div');
-    addTaskModalDiv.classList.add('add-new-task-modal');
+    const modalForAddTask = document.createElement('div');
+    modalForAddTask.classList.add('modal-task');
 
     const addTaskDiv = document.createElement('div');
     addTaskDiv.classList.add('add-task');
@@ -115,7 +116,7 @@ function loadOnStart() {
     textArea.setAttribute('cols', '30');
     textArea.setAttribute('rows', '5');
     const submitFormButton = document.createElement('button');
-    submitFormButton.textContent = 'Add task';
+    submitFormButton.textContent = 'Add Task';
     submitFormButton.setAttribute('id', 'submit');
     createTaskForm.appendChild(labelForTitle);
     createTaskForm.appendChild(inputTitle);
@@ -129,22 +130,68 @@ function loadOnStart() {
     addTaskDiv.appendChild(closeSpan);
     addTaskDiv.appendChild(modalTaskHeader);
     addTaskDiv.appendChild(createTaskForm);
-    addTaskModalDiv.appendChild(addTaskDiv);
+    modalForAddTask.appendChild(addTaskDiv);
+
+    const modalForAddProject = document.createElement('div');
+    modalForAddProject.classList.add('modal-project')
+    const addProjectDiv = document.createElement('div');
+    addProjectDiv.classList.add('add-project');
+    const addProjectHeader = document.createElement('h2');
+    addProjectHeader.textContent = 'Add Project:';
+    const closeProjectSpan = document.createElement('span');
+    closeProjectSpan.classList.add('close');
+    closeProjectSpan.textContent = 'x';
+    const inputForProjectTitle = document.createElement('input');
+    inputForProjectTitle.setAttribute('type', 'text');
+    inputForProjectTitle.setAttribute('id', 'add-project');
+    inputForProjectTitle.setAttribute('required', '');
+    const submitProjectButton = document.createElement('button');
+    submitProjectButton.setAttribute('id', 'submit-project');
+    submitProjectButton.textContent = 'Add Project';
+    addProjectDiv.appendChild(addProjectHeader);
+    addProjectDiv.appendChild(closeProjectSpan);
+    addProjectDiv.appendChild(inputForProjectTitle);
+    addProjectDiv.appendChild(submitProjectButton);
+    modalForAddProject.appendChild(addProjectDiv);
 
     mainContent.appendChild(sidebarDiv);
     mainContent.appendChild(addTaskBarDiv);
     mainContent.appendChild(taskContainerDiv);
-    mainContent.appendChild(addTaskModalDiv)
+    mainContent.appendChild(modalForAddTask);
+    mainContent.appendChild(modalForAddProject);
 }
 
 function showModalForTask() {
-    document.getElementsByClassName('add-new-task-modal')[0].style.display = "flex";
+    document.getElementsByClassName('modal-task')[0].style.display = "flex";
+}
+
+function showModalForProject() {
+    document.getElementsByClassName('modal-project')[0].style.display = "flex";
 }
 
 function closeAndClearModalForTask() {
-    document.getElementsByClassName('add-new-task-modal')[0].style.display = "none";
+    let title = document.getElementById('add-title');
+    title.value = '';
+    let dueDate = document.getElementById('due-date');
+    dueDate.value = '';
+    let priority = document.getElementById('priority');
+    priority.value = 'low';
+    let description = document.getElementById('description');
+    description.value = '';
+    document.getElementsByClassName('modal-task')[0].style.display = "none";
+}
+
+function closeAndClearModalForProject() {
+    let title = document.getElementById('add-project');
+    title.value = '';
+    document.getElementsByClassName('modal-project')[0].style.display = "none";
 }
 
 
-export { loadOnStart, showModalForTask, closeAndClearModalForTask    };
+export { 
+    loadOnStart, 
+    showModalForTask, 
+    closeAndClearModalForTask, 
+    showModalForProject,
+    closeAndClearModalForProject };
 
