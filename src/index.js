@@ -9,6 +9,8 @@ function todoApp() {
     let currentProject = null;
     const newTaskButton = document.getElementsByClassName('new-task-button')[0];
     const closeTaskModal = document.getElementsByClassName('close')[0];
+    const newProjectButton = document.getElementsByClassName('new-project-button')[0];
+    const closeProjectModal = document.getElementsByClassName('close')[1];
 
     /* const createTaskForm = document.getElementById('create-task');
 
@@ -16,6 +18,9 @@ function todoApp() {
 
     newTaskButton.addEventListener('click', display.showModalForTask);
     closeTaskModal.addEventListener('click', display.closeAndClearModalForTask);
+    newProjectButton.addEventListener('click', display.showModalForProject);
+    closeProjectModal.addEventListener('click', display.closeAndClearModalForProject);
+
 
     function createTask(e) {
         e.preventDefault();
