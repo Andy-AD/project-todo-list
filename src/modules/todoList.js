@@ -1,14 +1,32 @@
 import {isSameWeek, format} from 'date-fns';
 import { v4 as uuidv4 } from 'uuid';
 
-let taskList = [];
+let taskList = [
+    {title: 'Clean house', dueDate: '2023-08-04', priority: 'medium',id: 'kadlfkhadf123', description: 'Throw before Mom comes home', projectName: 'Household'},
+    {title: 'Do homework', dueDate: '2023-03-04', priority: 'high',id: 'kadlfkhadf124', description: 'Do it properly, concentrate!', projectName: 'School'},
+    {title: 'Change password', dueDate: '2022-12-04', priority: 'low',id: 'kadlfkhadf125', description: 'Proper password', projectName: 'Work'}
+];
 
-function createTask(title, dueDate, priority, description, project) {
+let projects = [
+    'Household', 'School', 'Work'
+];
+
+function addTask(title, dueDate, priority, description, projectName) {
     let id = uuidv4();
-    let projectName = project || 'none';
-    let date = format(dueDate, 'yyyy-MM-dd');
-    task = {id,title, date, dueDate, priority, description, projectName};
+    let task = {id,title, dueDate, priority, description};
+    if (projectName) {
+        task.projectName
+    }
     taskList.push(task);
+    console.log(taskList);
+}
+
+function addProject(name) {
+    projects.push(name);
+}
+
+function getProjects() {
+    return projects;
 }
 
 function getOneTask(id) {
@@ -19,11 +37,11 @@ function getTasks(details) {
     if (details === 'all') return taskList;
     if (details === 'today') {
         let dateToday = format(new Date(), 'yyyy-MM-dd');
-        let tasksToday = taskList.filter(task => task.date === dateToday);
+        let tasksToday = taskList.filter(task => task.dueDate === dateToday);
         return tasksToday;
     }
     if (details === 'week') {
-        let tasksForWeek = taskList.filter(task => isSameWeek(new Date() ,task.dueDate));
+        let tasksForWeek = taskList.filter(task => isSameWeek(new Date() ,new Date(dueDate)));
         return tasksForWeek;
     }
     let projectTasks = taskList.filter(task => task.projectName === details);
@@ -44,4 +62,12 @@ function deleteTask(id) {
     taskList.splice(indexToDelete,1);
 }
 
-export {createTask,getOneTask, getTasks, updateTask, deleteTask};
+export {
+    addTask,
+    getOneTask, 
+    getTasks, 
+    updateTask, 
+    deleteTask,
+    addProject,
+    getProjects
+    };
