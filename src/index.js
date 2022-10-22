@@ -4,7 +4,7 @@ import * as display from './modules/displayController.js'
 
 
 function todoApp() {
-    display.loadOnStart();    
+    display.loadOnStart();
     let currentView = 'all';
     let currentProject = null;
 
@@ -16,7 +16,7 @@ function todoApp() {
     const closeProjectModal = document.getElementsByClassName('close')[1];
     const submitProjectButton = document.getElementById('submit-project');
     const taskForm = document.getElementById('create-task');
-    const openDetailsButtons = [...document.getElementsByClassName('open-details-button')];    
+
 
     newTaskButton.addEventListener('click', display.showModalForTask);
     closeTaskModal.addEventListener('click', display.closeAndClearModalForTask);
@@ -24,13 +24,18 @@ function todoApp() {
     closeProjectModal.addEventListener('click', display.closeAndClearModalForProject);
     submitProjectButton.addEventListener('click', createProject);
     taskForm.addEventListener('submit', createTask);
-    openDetailsButtons.forEach(button => {
-        button.addEventListener('click', e => {
-            let id = e.composedPath()[2].id;
-            console.log(id);
-            display.showAndHideDetails(id);
-        });
-    });
+
+    function onUpdate() {        
+        let projects = todoList.getProjects();
+        display.displayProjects(projects);
+        let tasks = todoList.getTasks(currentView);
+        display.displayTasks(tasks);
+
+        const openDetailsButtons = [...document.getElementsByClassName('open-details-button')];
+        const deleteTaskButtons = [...document.getElementsByClassName('delete-task-button')];
+        openDetailsButtons.forEach(button => { button.addEventListener('click', showDetailsButtonHandler) });
+        deleteTaskButtons.forEach(button => { button.addEventListener('click', deleteTaskButtonHandler) });
+    }
 
 
     function createTask(e) {
@@ -52,11 +57,17 @@ function todoApp() {
         onUpdate();
     }
 
-    function onUpdate() {
-        let projects = todoList.getProjects();
-        display.displayProjects(projects);
-        let tasks = todoList.getTasks(currentView);
-        display.displayTasks(tasks);
+
+
+    function showDetailsButtonHandler(e) {
+        let id = e.composedPath()[2].id;
+        display.showAndHideDetails(id);
+    }
+
+    function deleteTaskButtonHandler(e) {
+        let id = e.composedPath()[2].id;
+        todoList.deleteTask(id);
+        onUpdate();
     }
 }
 
