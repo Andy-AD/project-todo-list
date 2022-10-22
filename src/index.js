@@ -23,7 +23,7 @@ function todoApp() {
     newProjectButton.addEventListener('click', display.showModalForProject);
     closeProjectModal.addEventListener('click', display.closeAndClearModalForProject);
     submitProjectButton.addEventListener('click', createProject);
-    taskForm.addEventListener('submit', createTask);
+    taskForm.addEventListener('submit', submitTaskFormHandler); // if id present update
 
     function onUpdate() {        
         let projects = todoList.getProjects();
@@ -32,22 +32,24 @@ function todoApp() {
         display.displayTasks(tasks);
 
         const openDetailsButtons = [...document.getElementsByClassName('open-details-button')];
+        const editTaskButtons = [...document.getElementsByClassName('edit-task-button')];
         const deleteTaskButtons = [...document.getElementsByClassName('delete-task-button')];
         openDetailsButtons.forEach(button => { button.addEventListener('click', showDetailsButtonHandler) });
+        editTaskButtons.forEach(button => { button.addEventListener('click', editTaskButtonHandler) });
         deleteTaskButtons.forEach(button => { button.addEventListener('click', deleteTaskButtonHandler) });
     }
 
 
-    function createTask(e) {
+    function submitTaskFormHandler(e) {
         console.log(e);
-        e.preventDefault();
+        /* e.preventDefault();
         let title = e.target[0].value;
         let dueDate = e.target[1].value;
         let priority = e.target[2].value;
         let description = e.target[3].value;
         todoList.addTask(title, dueDate, priority, description, currentProject);
         display.closeAndClearModalForTask();
-        onUpdate();
+        onUpdate(); */
     }
 
     function createProject() {
@@ -56,8 +58,6 @@ function todoApp() {
         display.closeAndClearModalForProject();
         onUpdate();
     }
-
-
 
     function showDetailsButtonHandler(e) {
         let id = e.composedPath()[2].id;
@@ -68,6 +68,14 @@ function todoApp() {
         let id = e.composedPath()[2].id;
         todoList.deleteTask(id);
         onUpdate();
+    }
+
+    function editTaskButtonHandler(e) {
+        let id = e.composedPath()[2].id;
+        let task = todoList.getOneTask(id);
+        console.log(task);
+        display.showModalForEditTask(task);
+
     }
 }
 
