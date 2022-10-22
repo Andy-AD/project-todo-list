@@ -30,7 +30,7 @@ function loadOnStart() {
     const div2 = document.createElement('div');
     const sidebarProjectsHeader = document.createElement('h2')
     sidebarProjectsHeader.textContent = 'Projects';
-    const sidebarProjectsList = document.createElement('ul');
+    const sidebarProjectsList = document.createElement('ol');
     sidebarProjectsList.setAttribute('id', 'projects');
 
     div2.appendChild(sidebarProjectsHeader);
@@ -47,16 +47,17 @@ function loadOnStart() {
     plusIcon.setAttribute('src', "../src/icons/plus-circle-outline.svg");
     plusIcon.style = 'width:24px;height:24px';
     addTaskButton.appendChild(plusIcon);
-    addTaskButton.textContent = 'New task';
+    addTaskButton.textContent = 'New Task';
     const addProjectButton = document.createElement('button');
     addProjectButton.classList.add('new-project-button');
     addProjectButton.appendChild(plusIcon);
-    addProjectButton.textContent = 'New project';
+    addProjectButton.textContent = 'New Project';
     addTaskBarDiv.appendChild(addTaskButton);
     addTaskBarDiv.appendChild(addProjectButton);
 
     const taskContainerDiv = document.createElement('div');
     taskContainerDiv.classList.add('task-container');
+    taskContainerDiv.setAttribute('id', 'task-container');
 
     const modalForAddTask = document.createElement('div');
     modalForAddTask.classList.add('modal-task');
@@ -117,7 +118,7 @@ function loadOnStart() {
     textArea.setAttribute('rows', '5');
     const submitFormButton = document.createElement('button');
     submitFormButton.textContent = 'Add Task';
-    submitFormButton.setAttribute('id', 'submit');
+    submitFormButton.setAttribute('id', 'submit-task');
     createTaskForm.appendChild(labelForTitle);
     createTaskForm.appendChild(inputTitle);
     createTaskForm.appendChild(labelForDueDate);
@@ -170,14 +171,8 @@ function showModalForProject() {
 }
 
 function closeAndClearModalForTask() {
-    let title = document.getElementById('add-title');
-    title.value = '';
-    let dueDate = document.getElementById('due-date');
-    dueDate.value = '';
-    let priority = document.getElementById('priority');
-    priority.value = 'low';
-    let description = document.getElementById('description');
-    description.value = '';
+    let form = document.getElementById('create-task');
+    form.reset();
     document.getElementsByClassName('modal-task')[0].style.display = "none";
 }
 
@@ -187,11 +182,86 @@ function closeAndClearModalForProject() {
     document.getElementsByClassName('modal-project')[0].style.display = "none";
 }
 
+function displayProjects(projects) {
+    const sidebarProjectsList = document.getElementById('projects');
+    clearContainer('projects');
+    projects.forEach(projectName => {
+        let project = document.createElement('li');
+        project.textContent = projectName;
+        sidebarProjectsList.appendChild(project);
+    });
+}
 
-export { 
-    loadOnStart, 
-    showModalForTask, 
-    closeAndClearModalForTask, 
+function displayTasks(tasksList) {
+    const taskContainer = document.getElementById('task-container');
+    clearContainer('task-container');
+    tasksList.forEach(task => {
+        let taskDiv = createTask(task);
+        taskContainer.appendChild(taskDiv);
+    });
+
+}
+
+function createTask(task) {
+    const taskContainer = document.createElement('div');
+    taskContainer.classList.add('task');
+    taskContainer.classList.add(`priority-${task.priority}`);
+    taskContainer.setAttribute('id', `${task.id}`);
+    const main = document.createElement('div');
+    main.classList.add('main');
+    const checkbox = document.createElement('input');
+    checkbox.setAttribute('type', 'checkbox');
+    checkbox.classList.add('complete-task-checkbox');
+    const title = document.createElement('h3');
+    title.textContent = task.title;
+    const openDetailButton = document.createElement('button');
+    openDetailButton.classList.add('open-details-button');
+    openDetailButton.textContent = 'Details';
+    const editTaskButton = document.createElement('button');
+    editTaskButton.classList.add('edit-task-button');
+    editTaskButton.textContent = 'Edit';
+    const deleteTaskButton = document.createElement('button');
+    deleteTaskButton.classList.add('delete-task-button');
+    deleteTaskButton.textContent = 'Delete';
+    const dueDate = document.createElement('span');
+    dueDate.textContent = `Due on: ${task.dueDate}`;
+    main.appendChild(checkbox);
+    main.appendChild(title);
+    main.appendChild(dueDate);
+    main.appendChild(openDetailButton);
+    main.appendChild(editTaskButton);
+    main.appendChild(deleteTaskButton);
+    const details = document.createElement('div');
+    details.classList.add('details');
+    const description = document.createElement('div');
+    description.textContent = task.description;
+    details.appendChild(description)
+    taskContainer.appendChild(main);
+    taskContainer.appendChild(details);
+    return taskContainer;
+}
+
+function showAndHideDetails(id) {
+    let taskDetails = document.getElementById(id).lastChild;
+    taskDetails.classList.toggle('details-visible');
+}
+
+
+function clearContainer(name) {
+    const container = document.getElementById(name);
+    while (container.firstChild) {
+        container.removeChild(container.firstChild);
+    }
+}
+
+export {
+    loadOnStart,
+    showModalForTask,
+    closeAndClearModalForTask,
     showModalForProject,
-    closeAndClearModalForProject };
+    closeAndClearModalForProject,
+    displayProjects,
+    displayTasks,
+    showAndHideDetails
+};
 
