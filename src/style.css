@@ -68,14 +68,11 @@ main {
 }
 
 .sidebar li {
-    display: flex;
-    align-items: center;
     font-size: 1.5em;
     width: 90%;
     border-radius: 5px;
-    margin: 10px 10px;
+    margin: 10px 20px;
     padding: 5px;
-    list-style: none;
     user-select: none;
 }
 
@@ -83,7 +80,7 @@ main {
     margin-right: 10px;
 }
 
-.sidebar li:hover { 
+.sidebar li:hover {
     cursor: pointer;
     background-color: white;
 }
@@ -129,7 +126,8 @@ main {
     flex-direction: column;
     margin: 10px 0;
     border: 1px solid black;
-    border-radius: 5px;
+    border-radius: 10px;
+    background-color: beige;
 }
 
 .task:hover {
@@ -137,25 +135,59 @@ main {
 }
 
 .main {
-    background-color: rgb(196, 247, 196);
+    border-radius: inherit;
     color: black;
-    border-bottom: 1px solid black;
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr auto auto auto;
+    grid-template-columns: auto 1fr auto auto auto auto;
+    gap: 10px;
     grid-template-rows: auto;
     align-items: center;
+    cursor: pointer;
     padding: 5px;
 }
 
-.main:hover {
-    cursor: pointer;
+.complete-task-checkbox {
+    margin: 0 20px;
+    height: 1.2rem;
+    width: 1.2rem;
+}
+
+.main>h3 {
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+
+.main>span {
+    font-size: 1.4rem;
+}
+
+.main>button {
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+}
+
+.open-details-button {
+    background-color: lightblue;
+}
+
+.delete-task-button {
+    color: white;
+    background-color: red;
 }
 
 .details {
-    display: flex;
+    display: none;
     padding: 20px;
     overflow: hidden;
+    border-top: 1px solid black;
+    background-color: rgb(241, 241, 235);
+    border-radius: 0 0 10px 10px;
+}
+
+.details>div {
+    font-size: 1.2rem;
 }
 
 .priority-low {
@@ -189,14 +221,14 @@ footer {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .add-task,
 .add-project {
     position: relative;
     height: auto;
-    width: 60%; 
+    width: 60%;
     border-radius: 10px;
     border: 2px lightgreen solid;
     background-color: white;
@@ -252,4 +284,8 @@ footer {
     right: 2%;
     top: 2%;
     cursor: pointer;
+}
+
+.details-visible {
+    display: flex;
 }
