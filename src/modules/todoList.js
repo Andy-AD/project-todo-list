@@ -30,7 +30,7 @@ function getProjects() {
 }
 
 function getOneTask(id) {
-    return taskList.filter(task => task.id === id);
+    return taskList.filter(task => task.id === id)[0];
 }
 
 function getTasks(details) {
