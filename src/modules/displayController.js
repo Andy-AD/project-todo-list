@@ -68,7 +68,7 @@ function loadOnStart() {
     closeSpan.classList.add('close');
     closeSpan.textContent = 'x';
     const modalTaskHeader = document.createElement('h2');
-    modalTaskHeader.textContent = 'Add new task';
+    modalTaskHeader.classList.add('modal-header');
     const createTaskForm = document.createElement('form');
     createTaskForm.setAttribute('id', 'create-task');
     createTaskForm.setAttribute('action', 'post');
@@ -117,7 +117,7 @@ function loadOnStart() {
     textArea.setAttribute('cols', '30');
     textArea.setAttribute('rows', '5');
     const submitFormButton = document.createElement('button');
-    submitFormButton.textContent = 'Add Task';
+    submitFormButton.textContent = 'Submit Task';
     submitFormButton.setAttribute('id', 'submit-task');
     createTaskForm.appendChild(labelForTitle);
     createTaskForm.appendChild(inputTitle);
@@ -166,12 +166,35 @@ function showModalForTask() {
     document.getElementsByClassName('modal-task')[0].style.display = "flex";
 }
 
+function showModalForEditTask(task) {
+    console.log(task);
+    document.getElementsByClassName('modal-task')[0].style.display = "flex";
+    const form = document.getElementById('create-task');
+    form.dataset.id = task.id;
+    form.dataset.projectName = task.projectName;
+    const header = document.getElementsByClassName('modal-header')[0];
+    header.textContent = "Edit Task";
+    const title = document.getElementById('add-title');
+    title.value = task.title;
+    const dueDate = document.getElementById('due-date');
+    dueDate.value = task.dueDate;
+    const priority = document.getElementById('priority');
+    priority.value = task.priority;
+    const description = document.getElementById('description');
+    description.value = task.description;
+}
+
 function showModalForProject() {
     document.getElementsByClassName('modal-project')[0].style.display = "flex";
 }
 
 function closeAndClearModalForTask() {
+    const header = document.getElementsByClassName('modal-header')[0];
+    header.textContent = "Add New Task";
+
     let form = document.getElementById('create-task');
+    delete form.dataset.id;
+    delete form.dataset.projectName;
     form.reset();
     document.getElementsByClassName('modal-task')[0].style.display = "none";
 }
@@ -199,7 +222,6 @@ function displayTasks(tasksList) {
         let taskDiv = createTask(task);
         taskContainer.appendChild(taskDiv);
     });
-
 }
 
 function createTask(task) {
@@ -262,6 +284,7 @@ export {
     closeAndClearModalForProject,
     displayProjects,
     displayTasks,
-    showAndHideDetails
+    showAndHideDetails,
+    showModalForEditTask
 };
 
