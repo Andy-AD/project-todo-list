@@ -18,7 +18,6 @@ function addTask(title, dueDate, priority, description, projectName) {
         task.projectName
     }
     taskList.push(task);
-    console.log(taskList);
 }
 
 function addProject(name) {
@@ -54,7 +53,10 @@ function getTasks(details) {
 
 function updateTask(id, details) {
     let indexToUpdate = taskList.findIndex(task => task.id === id);
-    console.log(details);    
+    taskList[indexToUpdate].title = details.title;
+    taskList[indexToUpdate].dueDate = details.dueDate;
+    taskList[indexToUpdate].priority = details.priority;
+    taskList[indexToUpdate].description = details.description;
 }
 
 function deleteTask(id) {
