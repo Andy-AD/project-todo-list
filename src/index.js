@@ -25,7 +25,7 @@ function todoApp() {
     submitProjectButton.addEventListener('click', createProject);
     taskForm.addEventListener('submit', submitTaskFormHandler); // if id present update
 
-    function onUpdate() {        
+    function onUpdate() {
         let projects = todoList.getProjects();
         display.displayProjects(projects);
         let tasks = todoList.getTasks(currentView);
@@ -41,15 +41,19 @@ function todoApp() {
 
 
     function submitTaskFormHandler(e) {
-        console.log(e);
-        /* e.preventDefault();
+        e.preventDefault();
         let title = e.target[0].value;
         let dueDate = e.target[1].value;
         let priority = e.target[2].value;
         let description = e.target[3].value;
-        todoList.addTask(title, dueDate, priority, description, currentProject);
+        if (e.target.dataset.id) {
+            const id = e.target.dataset.id;
+            todoList.updateTask(id, {title, dueDate, priority, description});
+        } else {
+            todoList.addTask(title, dueDate, priority, description, currentProject);
+        }
         display.closeAndClearModalForTask();
-        onUpdate(); */
+        onUpdate();
     }
 
     function createProject() {
@@ -75,7 +79,6 @@ function todoApp() {
         let task = todoList.getOneTask(id);
         console.log(task);
         display.showModalForEditTask(task);
-
     }
 }
 
