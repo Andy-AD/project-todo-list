@@ -31,9 +31,11 @@ function todoApp() {
         let tasks = todoList.getTasks(currentView);
         display.displayTasks(tasks);
 
+        const completeTaskCheckboxes = [...document.getElementsByClassName('complete-task-checkbox')];
         const openDetailsButtons = [...document.getElementsByClassName('open-details-button')];
         const editTaskButtons = [...document.getElementsByClassName('edit-task-button')];
         const deleteTaskButtons = [...document.getElementsByClassName('delete-task-button')];
+        completeTaskCheckboxes.forEach(checkbox => checkbox.addEventListener('click', completeTaskCheckboxHandler));
         openDetailsButtons.forEach(button => { button.addEventListener('click', showDetailsButtonHandler) });
         editTaskButtons.forEach(button => { button.addEventListener('click', editTaskButtonHandler) });
         deleteTaskButtons.forEach(button => { button.addEventListener('click', deleteTaskButtonHandler) });
@@ -79,6 +81,17 @@ function todoApp() {
         let task = todoList.getOneTask(id);
         console.log(task);
         display.showModalForEditTask(task);
+    }
+
+    function completeTaskCheckboxHandler(e) {
+        const id = e.composedPath()[2].id;
+        console.log(id, e.target.checked)
+        if (e.target.checked) {
+            todoList.completeTask(id);
+        } else {
+            todoList.undoCompleteTask(id);
+        }
+        onUpdate();
     }
 }
 
