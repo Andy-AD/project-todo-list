@@ -171,7 +171,6 @@ function showModalForEditTask(task) {
     document.getElementsByClassName('modal-task')[0].style.display = "flex";
     const form = document.getElementById('create-task');
     form.dataset.id = task.id;
-    form.dataset.projectName = task.projectName;
     const header = document.getElementsByClassName('modal-header')[0];
     header.textContent = "Edit Task";
     const title = document.getElementById('add-title');
