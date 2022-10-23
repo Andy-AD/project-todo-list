@@ -14,7 +14,7 @@ function todoApp() {
     const closeTaskModal = document.getElementsByClassName('close')[0];
     const newProjectButton = document.getElementsByClassName('new-project-button')[0];
     const closeProjectModal = document.getElementsByClassName('close')[1];
-    const submitProjectButton = document.getElementById('submit-project');
+    const projectForm = document.getElementById('create-project');
     const taskForm = document.getElementById('create-task');
     const viewTasksButtons = [...document.getElementsByClassName('view-tasks')];
 
@@ -23,7 +23,7 @@ function todoApp() {
     closeTaskModal.addEventListener('click', display.closeAndClearModalForTask);
     newProjectButton.addEventListener('click', display.showModalForProject);
     closeProjectModal.addEventListener('click', display.closeAndClearModalForProject);
-    submitProjectButton.addEventListener('click', createProject);
+    projectForm.addEventListener('submit', createProject);
     taskForm.addEventListener('submit', submitTaskFormHandler);
     viewTasksButtons.forEach(button => button.addEventListener('click', viewTasksHandler)) 
 
@@ -60,7 +60,8 @@ function todoApp() {
         onUpdate();
     }
 
-    function createProject() {
+    function createProject(e) {
+        e.preventDefault();
         let projectName = document.getElementById('add-project').value;
         todoList.addProject(projectName);
         display.closeAndClearModalForProject();
@@ -96,9 +97,7 @@ function todoApp() {
 
     function viewTasksHandler(e) {
         currentView = e.target.dataset.viewTasks;
-        const lastActive = document.getElementsByClassName('active')[0];
-        lastActive.classList.toggle('active');
-        this.classList.toggle('active');
+        display.toggleActiveClass(this);
         onUpdate();
     }
 }
