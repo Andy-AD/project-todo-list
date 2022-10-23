@@ -30,17 +30,19 @@ function todoApp() {
     function onUpdate() {
         let projects = todoList.getProjects();
         display.displayProjects(projects);
-        let tasks = todoList.getTasks(currentView);
+        let tasks = todoList.getTasks(currentView, currentProject);
         display.displayTasks(tasks);
 
         const completeTaskCheckboxes = [...document.getElementsByClassName('complete-task-checkbox')];
         const openDetailsButtons = [...document.getElementsByClassName('open-details-button')];
         const editTaskButtons = [...document.getElementsByClassName('edit-task-button')];
         const deleteTaskButtons = [...document.getElementsByClassName('delete-task-button')];
+        const showProjectButtons = [...document.getElementsByClassName('project')];
         completeTaskCheckboxes.forEach(checkbox => checkbox.addEventListener('click', completeTaskCheckboxHandler));
         openDetailsButtons.forEach(button => { button.addEventListener('click', showDetailsButtonHandler) });
         editTaskButtons.forEach(button => { button.addEventListener('click', editTaskButtonHandler) });
         deleteTaskButtons.forEach(button => { button.addEventListener('click', deleteTaskButtonHandler) });
+        showProjectButtons.forEach(button => button.addEventListener('click', showTaskByProjectHandler))
     }
 
 
@@ -97,6 +99,15 @@ function todoApp() {
 
     function viewTasksHandler(e) {
         currentView = e.target.dataset.viewTasks;
+        currentProject = null;
+        display.toggleActiveClass(this);
+        onUpdate();
+    }
+
+    function showTaskByProjectHandler(e) {
+        console.log(e);
+        currentProject = e.target.dataset.projectName;
+        currentView = 'project';
         display.toggleActiveClass(this);
         onUpdate();
     }
