@@ -289,3 +289,7 @@ footer {
 .details-visible {
     display: flex;
 }
+
+.completed-date {
+    color: green;
+}
