@@ -190,7 +190,6 @@ function showModalForProject() {
 function closeAndClearModalForTask() {
     const header = document.getElementsByClassName('modal-header')[0];
     header.textContent = "Add New Task";
-
     let form = document.getElementById('create-task');
     delete form.dataset.id;
     delete form.dataset.projectName;
@@ -246,6 +245,12 @@ function createTask(task) {
     deleteTaskButton.textContent = 'Delete';
     const dueDate = document.createElement('span');
     dueDate.textContent = `Due on: ${task.dueDate}`;
+    if (task.completed) {
+        checkbox.setAttribute('checked', '');
+        editTaskButton.setAttribute('disabled', '');
+        dueDate.textContent = `Completed on: ${task.completedDate}`
+        dueDate.classList.add('completed-date');
+    }
     main.appendChild(checkbox);
     main.appendChild(title);
     main.appendChild(dueDate);
