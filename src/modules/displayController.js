@@ -12,20 +12,23 @@ function loadOnStart() {
     sidebarTasksHeader.textContent = 'Tasks';
     const sidebarTaskList = document.createElement('ul');
     const sidebarTaskListItem1 = document.createElement('li');
-    sidebarTaskListItem1.classList.add('all-task');
+    sidebarTaskListItem1.classList.add('view-tasks');
     sidebarTaskListItem1.classList.add('active');
     sidebarTaskListItem1.textContent = 'All';
+    sidebarTaskListItem1.dataset.viewTasks = 'all';
     const sidebarTaskListItem2 = document.createElement('li');
-    sidebarTaskListItem2.classList.add('today-task');
+    sidebarTaskListItem2.classList.add('view-tasks');
     sidebarTaskListItem2.textContent = 'Today';
+    sidebarTaskListItem2.dataset.viewTasks = 'today';
     const sidebarTaskListItem3 = document.createElement('li');
-    sidebarTaskListItem3.classList.add('week-task');
+    sidebarTaskListItem3.classList.add('view-tasks');
     sidebarTaskListItem3.textContent = 'This week';
+    sidebarTaskListItem3.dataset.viewTasks = 'week';
     sidebarTaskList.appendChild(sidebarTaskListItem1);
     sidebarTaskList.appendChild(sidebarTaskListItem2);
     sidebarTaskList.appendChild(sidebarTaskListItem3);
     div1.appendChild(sidebarTasksHeader);
-    div1.appendChild(sidebarTaskList);
+    div1.appendChild(sidebarTaskList);  
 
     const div2 = document.createElement('div');
     const sidebarProjectsHeader = document.createElement('h2')
@@ -69,6 +72,7 @@ function loadOnStart() {
     closeSpan.textContent = 'x';
     const modalTaskHeader = document.createElement('h2');
     modalTaskHeader.classList.add('modal-header');
+    modalTaskHeader.textContent = "Add new task:"
     const createTaskForm = document.createElement('form');
     createTaskForm.setAttribute('id', 'create-task');
     createTaskForm.setAttribute('action', 'post');
@@ -142,6 +146,10 @@ function loadOnStart() {
     const closeProjectSpan = document.createElement('span');
     closeProjectSpan.classList.add('close');
     closeProjectSpan.textContent = 'x';
+    const projectForm = document.createElement('form');
+    projectForm.setAttribute('id', 'create-project');
+    projectForm.setAttribute('action', 'post');
+    projectForm.setAttribute('method', 'post');
     const inputForProjectTitle = document.createElement('input');
     inputForProjectTitle.setAttribute('type', 'text');
     inputForProjectTitle.setAttribute('id', 'add-project');
@@ -149,10 +157,11 @@ function loadOnStart() {
     const submitProjectButton = document.createElement('button');
     submitProjectButton.setAttribute('id', 'submit-project');
     submitProjectButton.textContent = 'Add Project';
+    projectForm.appendChild(inputForProjectTitle);
+    projectForm.appendChild(submitProjectButton);
     addProjectDiv.appendChild(addProjectHeader);
     addProjectDiv.appendChild(closeProjectSpan);
-    addProjectDiv.appendChild(inputForProjectTitle);
-    addProjectDiv.appendChild(submitProjectButton);
+    addProjectDiv.appendChild(projectForm);
     modalForAddProject.appendChild(addProjectDiv);
 
     mainContent.appendChild(sidebarDiv);
@@ -167,7 +176,6 @@ function showModalForTask() {
 }
 
 function showModalForEditTask(task) {
-    console.log(task);
     document.getElementsByClassName('modal-task')[0].style.display = "flex";
     const form = document.getElementById('create-task');
     form.dataset.id = task.id;
@@ -189,7 +197,7 @@ function showModalForProject() {
 
 function closeAndClearModalForTask() {
     const header = document.getElementsByClassName('modal-header')[0];
-    header.textContent = "Add New Task";
+    header.textContent = "Add new task";
     let form = document.getElementById('create-task');
     delete form.dataset.id;
     delete form.dataset.projectName;
@@ -198,8 +206,8 @@ function closeAndClearModalForTask() {
 }
 
 function closeAndClearModalForProject() {
-    let title = document.getElementById('add-project');
-    title.value = '';
+    const form = document.getElementById('create-project');
+    form.reset();
     document.getElementsByClassName('modal-project')[0].style.display = "none";
 }
 
@@ -209,6 +217,8 @@ function displayProjects(projects) {
     projects.forEach(projectName => {
         let project = document.createElement('li');
         project.textContent = projectName;
+        project.classList.add('project');
+        project.dataset.name = projectName;
         sidebarProjectsList.appendChild(project);
     });
 }
@@ -280,15 +290,22 @@ function clearContainer(name) {
     }
 }
 
-export {
-    loadOnStart,
-    showModalForTask,
-    closeAndClearModalForTask,
-    showModalForProject,
-    closeAndClearModalForProject,
-    displayProjects,
-    displayTasks,
-    showAndHideDetails,
-    showModalForEditTask
-};
+function toggleActiveClass(element) {
+    const lastActive = document.getElementsByClassName('active')[0];
+    lastActive.classList.toggle('active');
+    element.classList.toggle('active');
+}
+
+    export {
+        loadOnStart,
+        showModalForTask,
+        closeAndClearModalForTask,
+        showModalForProject,
+        closeAndClearModalForProject,
+        displayProjects,
+        displayTasks,
+        showAndHideDetails,
+        showModalForEditTask,
+        toggleActiveClass
+    };
 

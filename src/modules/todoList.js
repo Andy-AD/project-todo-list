@@ -40,7 +40,7 @@ function getTasks(details) {
         return tasksToday;
     }
     if (details === 'week') {
-        let tasksForWeek = taskList.filter(task => isSameWeek(new Date() ,new Date(dueDate)));
+        let tasksForWeek = taskList.filter(task => isSameWeek(new Date() ,new Date(task.dueDate)));
         return tasksForWeek;
     }
     let projectTasks = taskList.filter(task => task.projectName === details);
@@ -86,5 +86,4 @@ export {
     getProjects,
     completeTask,
     undoCompleteTask
-
     };
