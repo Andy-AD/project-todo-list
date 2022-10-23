@@ -64,6 +64,18 @@ function deleteTask(id) {
     taskList.splice(indexToDelete,1);
 }
 
+function completeTask(id) {
+    const taskIndex = taskList.findIndex(task => task.id === id);
+    taskList[taskIndex].completed = true;
+    taskList[taskIndex].completedDate = format(new Date(), 'yyyy-MM-dd');
+}
+
+function undoCompleteTask(id) {
+    const taskIndex = taskList.findIndex(task => task.id === id);
+    taskList[taskIndex].completed = false;
+    taskList[taskIndex].completedDate = null;
+}
+
 export {
     addTask,
     getOneTask, 
@@ -71,5 +83,8 @@ export {
     updateTask, 
     deleteTask,
     addProject,
-    getProjects
+    getProjects,
+    completeTask,
+    undoCompleteTask
+
     };
