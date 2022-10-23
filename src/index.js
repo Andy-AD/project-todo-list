@@ -16,6 +16,7 @@ function todoApp() {
     const closeProjectModal = document.getElementsByClassName('close')[1];
     const submitProjectButton = document.getElementById('submit-project');
     const taskForm = document.getElementById('create-task');
+    const viewTasksButtons = [...document.getElementsByClassName('view-tasks')];
 
 
     newTaskButton.addEventListener('click', display.showModalForTask);
@@ -23,7 +24,8 @@ function todoApp() {
     newProjectButton.addEventListener('click', display.showModalForProject);
     closeProjectModal.addEventListener('click', display.closeAndClearModalForProject);
     submitProjectButton.addEventListener('click', createProject);
-    taskForm.addEventListener('submit', submitTaskFormHandler); // if id present update
+    taskForm.addEventListener('submit', submitTaskFormHandler);
+    viewTasksButtons.forEach(button => button.addEventListener('click', viewTasksHandler)) 
 
     function onUpdate() {
         let projects = todoList.getProjects();
@@ -79,18 +81,24 @@ function todoApp() {
     function editTaskButtonHandler(e) {
         let id = e.composedPath()[2].id;
         let task = todoList.getOneTask(id);
-        console.log(task);
         display.showModalForEditTask(task);
     }
 
     function completeTaskCheckboxHandler(e) {
         const id = e.composedPath()[2].id;
-        console.log(id, e.target.checked)
         if (e.target.checked) {
             todoList.completeTask(id);
         } else {
             todoList.undoCompleteTask(id);
         }
+        onUpdate();
+    }
+
+    function viewTasksHandler(e) {
+        currentView = e.target.dataset.viewTasks;
+        const lastActive = document.getElementsByClassName('active')[0];
+        lastActive.classList.toggle('active');
+        this.classList.toggle('active');
         onUpdate();
     }
 }
