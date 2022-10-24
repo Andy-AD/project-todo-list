@@ -47,14 +47,9 @@ function loadOnStart() {
     addTaskBarDiv.classList.add('add-task-bar');
     const addTaskButton = document.createElement('button');
     addTaskButton.classList.add('new-task-button');
-    const plusIcon = document.createElement('img');
-    plusIcon.setAttribute('src', "../src/icons/plus-circle-outline.svg");
-    plusIcon.style = 'width:24px;height:24px';
-    addTaskButton.appendChild(plusIcon);
     addTaskButton.textContent = 'New Task';
     const addProjectButton = document.createElement('button');
     addProjectButton.classList.add('new-project-button');
-    addProjectButton.appendChild(plusIcon);
     addProjectButton.textContent = 'New Project';
     addTaskBarDiv.appendChild(addTaskButton);
     addTaskBarDiv.appendChild(addProjectButton);
@@ -304,7 +299,8 @@ function toggleActiveClass(element) {
     if (lastActive) {
         lastActive.classList.remove('active');
     }
-    element.classList.add('active');
+    const highlightedElement = element || document.getElementsByClassName('view-tasks')[0];
+    highlightedElement.classList.add('active');
 }
 
 export {
