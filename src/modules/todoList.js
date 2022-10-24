@@ -28,6 +28,16 @@ function getProjects() {
     return projects;
 }
 
+function deleteProject(projectToDelete) {
+    let indexToDelete = projects.findIndex(project => project === projectToDelete);
+    projects.splice(indexToDelete,1);
+    taskList.forEach(task => {
+        if (task.projectName === projectToDelete) {
+            deleteTask(task.id);
+        }
+    })
+}
+
 function getOneTask(id) {
     return taskList.filter(task => task.id === id)[0];
 }
@@ -83,5 +93,6 @@ export {
     addProject,
     getProjects,
     completeTask,
-    undoCompleteTask
+    undoCompleteTask,
+    deleteProject
     };
