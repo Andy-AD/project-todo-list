@@ -217,7 +217,12 @@ function displayProjects(projects, highlightedProject) {
     clearContainer('projects');
     projects.forEach(projectName => {
         let project = document.createElement('li');
+        let deleteIcon = document.createElement('i');
+        deleteIcon.textContent = 'delete_forever';
+        deleteIcon.classList.add('material-icons');
+        deleteIcon.classList.add('delete-icon');
         project.textContent = projectName;
+        project.appendChild(deleteIcon);        
         project.classList.add('project');
         project.dataset.name = projectName;
         if (projectName === highlightedProject) {
