@@ -76,10 +76,6 @@ main {
     user-select: none;
 }
 
-#projects img {
-    margin-right: 10px;
-}
-
 .sidebar li:hover {
     cursor: pointer;
     background-color: white;
@@ -90,12 +86,28 @@ main {
     color: black;
 }
 
+.project {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid black;
+}
+
+.delete-icon {
+    color: red;
+}
+
+.delete-icon:hover {
+    color:black;
+    background-color: white;
+}
+
 .add-task-bar {
     grid-area: 1 / 2 / 2 / -1;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    padding-right: 20px;
+    padding-left: 20px;
 }
 
 .add-task-bar button {
@@ -130,7 +142,8 @@ main {
     background-color: beige;
 }
 
-.task:hover {
+.task:hover, 
+.project:hover {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
@@ -274,6 +287,11 @@ footer {
     background-color: lightgreen;
     font-size: 1.2em;
     cursor: pointer;
+}
+
+.add-project>form {
+    display: flex;
+    flex-direction: column;
 }
 
 .close {
