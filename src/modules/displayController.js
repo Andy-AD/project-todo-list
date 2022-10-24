@@ -1,4 +1,5 @@
 import { add } from "date-fns";
+import { hi } from "date-fns/locale";
 
 const mainContent = document.getElementById('content');
 
@@ -28,7 +29,7 @@ function loadOnStart() {
     sidebarTaskList.appendChild(sidebarTaskListItem2);
     sidebarTaskList.appendChild(sidebarTaskListItem3);
     div1.appendChild(sidebarTasksHeader);
-    div1.appendChild(sidebarTaskList);  
+    div1.appendChild(sidebarTaskList);
 
     const div2 = document.createElement('div');
     const sidebarProjectsHeader = document.createElement('h2')
@@ -211,7 +212,7 @@ function closeAndClearModalForProject() {
     document.getElementsByClassName('modal-project')[0].style.display = "none";
 }
 
-function displayProjects(projects) {
+function displayProjects(projects, highlightedProject) {
     const sidebarProjectsList = document.getElementById('projects');
     clearContainer('projects');
     projects.forEach(projectName => {
@@ -219,6 +220,9 @@ function displayProjects(projects) {
         project.textContent = projectName;
         project.classList.add('project');
         project.dataset.name = projectName;
+        if (projectName === highlightedProject) {
+            toggleActiveClass(project);
+        }
         sidebarProjectsList.appendChild(project);
     });
 }
@@ -292,20 +296,22 @@ function clearContainer(name) {
 
 function toggleActiveClass(element) {
     const lastActive = document.getElementsByClassName('active')[0];
-    lastActive.classList.toggle('active');
-    element.classList.toggle('active');
+    if (lastActive) {
+        lastActive.classList.remove('active');
+    }
+    element.classList.add('active');
 }
 
-    export {
-        loadOnStart,
-        showModalForTask,
-        closeAndClearModalForTask,
-        showModalForProject,
-        closeAndClearModalForProject,
-        displayProjects,
-        displayTasks,
-        showAndHideDetails,
-        showModalForEditTask,
-        toggleActiveClass
-    };
+export {
+    loadOnStart,
+    showModalForTask,
+    closeAndClearModalForTask,
+    showModalForProject,
+    closeAndClearModalForProject,
+    displayProjects,
+    displayTasks,
+    showAndHideDetails,
+    showModalForEditTask,
+    toggleActiveClass
+};
 
