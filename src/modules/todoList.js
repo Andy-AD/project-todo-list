@@ -32,23 +32,21 @@ function getOneTask(id) {
     return taskList.filter(task => task.id === id)[0];
 }
 
-function getTasks(details) {
-    if (details === 'all') return taskList;
-    if (details === 'today') {
+function getTasks(view, project) {
+    if (view === 'all') return taskList;
+    if (view === 'today') {
         let dateToday = format(new Date(), 'yyyy-MM-dd');
         let tasksToday = taskList.filter(task => task.dueDate === dateToday);
         return tasksToday;
     }
-    if (details === 'week') {
+    if (view === 'week') {
         let tasksForWeek = taskList.filter(task => isSameWeek(new Date() ,new Date(task.dueDate)));
         return tasksForWeek;
     }
-    let projectTasks = taskList.filter(task => task.projectName === details);
-    if (projectTasks.length !== 0) {
+    if (view === 'project') {
+        let projectTasks = taskList.filter(task => task.projectName === project);
         return projectTasks;
-    } else {
-        console.error('Wrong details submitted');
-    }    
+    }     
 }
 
 function updateTask(id, details) {
