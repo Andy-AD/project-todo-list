@@ -25,7 +25,7 @@ function todoApp() {
     closeProjectModal.addEventListener('click', display.closeAndClearModalForProject);
     projectForm.addEventListener('submit', createProject);
     taskForm.addEventListener('submit', submitTaskFormHandler);
-    viewTasksButtons.forEach(button => button.addEventListener('click', viewTasksHandler)) 
+    viewTasksButtons.forEach(button => button.addEventListener('click', viewTasksHandler))
 
     function onUpdate() {
         let projects = todoList.getProjects();
@@ -33,16 +33,19 @@ function todoApp() {
         let tasks = todoList.getTasks(currentView, currentProject);
         display.displayTasks(tasks);
 
+
         const completeTaskCheckboxes = [...document.getElementsByClassName('complete-task-checkbox')];
         const openDetailsButtons = [...document.getElementsByClassName('open-details-button')];
         const editTaskButtons = [...document.getElementsByClassName('edit-task-button')];
         const deleteTaskButtons = [...document.getElementsByClassName('delete-task-button')];
         const showProjectButtons = [...document.getElementsByClassName('project')];
+        const deleteProjectIcons = [...document.getElementsByClassName('delete-icon')];
         completeTaskCheckboxes.forEach(checkbox => checkbox.addEventListener('click', completeTaskCheckboxHandler));
         openDetailsButtons.forEach(button => { button.addEventListener('click', showDetailsButtonHandler) });
         editTaskButtons.forEach(button => { button.addEventListener('click', editTaskButtonHandler) });
         deleteTaskButtons.forEach(button => { button.addEventListener('click', deleteTaskButtonHandler) });
-        showProjectButtons.forEach(button => button.addEventListener('click', showTaskByProjectHandler))
+        showProjectButtons.forEach(button => button.addEventListener('click', showTaskByProjectHandler));
+        deleteProjectIcons.forEach(deleteIcon => deleteIcon.addEventListener('click', deleteProjectHandler));
     }
 
 
@@ -54,7 +57,7 @@ function todoApp() {
         let description = e.target[3].value;
         if (e.target.dataset.id) {
             const id = e.target.dataset.id;
-            todoList.updateTask(id, {title, dueDate, priority, description});
+            todoList.updateTask(id, { title, dueDate, priority, description });
         } else {
             todoList.addTask(title, dueDate, priority, description, currentProject);
         }
@@ -67,6 +70,16 @@ function todoApp() {
         let projectName = document.getElementById('add-project').value;
         todoList.addProject(projectName);
         display.closeAndClearModalForProject();
+        onUpdate();
+    }
+
+    function deleteProjectHandler(e) {
+        e.stopPropagation();
+        let projectToDelete = e.composedPath()[1].dataset.name;
+        todoList.deleteProject(projectToDelete);
+        currentView = 'all';
+        currentProject = null;
+        display.toggleActiveClass();
         onUpdate();
     }
 
@@ -106,7 +119,7 @@ function todoApp() {
 
     function showTaskByProjectHandler(e) {
         currentProject = e.target.dataset.name;
-        currentView = 'project';        
+        currentView = 'project';
         onUpdate();
     }
 }
