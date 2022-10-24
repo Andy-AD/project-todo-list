@@ -1,6 +1,6 @@
 import './style.css';
-import * as todoList from './modules/todoList.js';
-import * as display from './modules/displayController.js'
+import * as todoList from './modules/todoList';
+import * as display from './modules/displayController'
 
 
 function todoApp() {
@@ -29,7 +29,7 @@ function todoApp() {
 
     function onUpdate() {
         let projects = todoList.getProjects();
-        display.displayProjects(projects);
+        display.displayProjects(projects, currentProject);
         let tasks = todoList.getTasks(currentView, currentProject);
         display.displayTasks(tasks);
 
@@ -105,10 +105,8 @@ function todoApp() {
     }
 
     function showTaskByProjectHandler(e) {
-        console.log(e);
-        currentProject = e.target.dataset.projectName;
-        currentView = 'project';
-        display.toggleActiveClass(this);
+        currentProject = e.target.dataset.name;
+        currentView = 'project';        
         onUpdate();
     }
 }
