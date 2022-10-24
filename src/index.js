@@ -27,12 +27,11 @@ function todoApp() {
     taskForm.addEventListener('submit', submitTaskFormHandler);
     viewTasksButtons.forEach(button => button.addEventListener('click', viewTasksHandler))
 
-    function onUpdate() {
+    function onUpdate() {   
         let projects = todoList.getProjects();
         display.displayProjects(projects, currentProject);
         let tasks = todoList.getTasks(currentView, currentProject);
         display.displayTasks(tasks);
-
 
         const completeTaskCheckboxes = [...document.getElementsByClassName('complete-task-checkbox')];
         const openDetailsButtons = [...document.getElementsByClassName('open-details-button')];
@@ -51,15 +50,16 @@ function todoApp() {
 
     function submitTaskFormHandler(e) {
         e.preventDefault();
-        let title = e.target[0].value;
-        let dueDate = e.target[1].value;
-        let priority = e.target[2].value;
-        let description = e.target[3].value;
+        const title = e.target[0].value;
+        const dueDate = e.target[1].value;
+        const priority = e.target[2].value;
+        const projectName = e.target[3].value;
+        const description = e.target[4].value;
         if (e.target.dataset.id) {
             const id = e.target.dataset.id;
-            todoList.updateTask(id, { title, dueDate, priority, description });
+            todoList.updateTask(id, { title, dueDate, priority, description,projectName});
         } else {
-            todoList.addTask(title, dueDate, priority, description, currentProject);
+            todoList.addTask(title, dueDate, priority, description, projectName);
         }
         display.closeAndClearModalForTask();
         onUpdate();
