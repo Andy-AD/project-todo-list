@@ -108,6 +108,12 @@ function loadOnStart() {
     selectPriority.appendChild(optionLowPriority);
     selectPriority.appendChild(optionMediumPriority);
     selectPriority.appendChild(optionHighPriority);
+    const labelForProject = document.createElement('label');
+    labelForProject.setAttribute('for', 'project-selection');
+    labelForProject.textContent = 'Select project:';
+    const selectProject = document.createElement('select');
+    selectProject.setAttribute('name', 'project-selection');
+    selectProject.setAttribute('id', 'project-selection');
     const labelForDescription = document.createElement('label');
     labelForDescription.setAttribute('for', 'description');
     labelForDescription.textContent = 'Description:'
@@ -125,6 +131,8 @@ function loadOnStart() {
     createTaskForm.appendChild(inputDueDate);
     createTaskForm.appendChild(labelForPriority);
     createTaskForm.appendChild(selectPriority);
+    createTaskForm.appendChild(labelForProject);
+    createTaskForm.appendChild(selectProject);
     createTaskForm.appendChild(labelForDescription);
     createTaskForm.appendChild(textArea);
     createTaskForm.appendChild(submitFormButton);
@@ -183,6 +191,8 @@ function showModalForEditTask(task) {
     dueDate.value = task.dueDate;
     const priority = document.getElementById('priority');
     priority.value = task.priority;
+    const project = document.getElementById('project-selection');
+    project.value = task.projectName;
     const description = document.getElementById('description');
     description.value = task.description;
 }
@@ -210,6 +220,7 @@ function closeAndClearModalForProject() {
 function displayProjects(projects, highlightedProject) {
     const sidebarProjectsList = document.getElementById('projects');
     clearContainer('projects');
+    populateCreateTaskWithProjectNames(projects);
     projects.forEach(projectName => {
         let project = document.createElement('li');
         let deleteIcon = document.createElement('i');
@@ -217,7 +228,7 @@ function displayProjects(projects, highlightedProject) {
         deleteIcon.classList.add('material-icons');
         deleteIcon.classList.add('delete-icon');
         project.textContent = projectName;
-        project.appendChild(deleteIcon);        
+        project.appendChild(deleteIcon);
         project.classList.add('project');
         project.dataset.name = projectName;
         if (projectName === highlightedProject) {
@@ -226,6 +237,25 @@ function displayProjects(projects, highlightedProject) {
         sidebarProjectsList.appendChild(project);
     });
 }
+
+function populateCreateTaskWithProjectNames(projects) {
+    clearContainer('project-selection');
+    const selectOption = document.getElementById('project-selection');
+    const optionNoProject = document.createElement('option');
+    optionNoProject.setAttribute('value', 'none');
+    optionNoProject.textContent = 'None';
+    optionNoProject.setAttribute('selected', '');
+    selectOption.appendChild(optionNoProject);
+    projects.forEach(project => {
+        const optionForProject = document.createElement('option');
+        optionForProject.setAttribute('value', project);
+        optionForProject.textContent = project;
+        selectOption.appendChild(optionForProject);
+    })
+
+}
+
+
 
 function displayTasks(tasksList) {
     const taskContainer = document.getElementById('task-container');
