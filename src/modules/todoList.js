@@ -13,10 +13,7 @@ let projects = [
 
 function addTask(title, dueDate, priority, description, projectName) {
     let id = uuidv4();
-    let task = {id,title, dueDate, priority, description};
-    if (projectName) {
-        task.projectName
-    }
+    let task = {id,title, dueDate, priority, description, projectName};
     taskList.push(task);
 }
 
@@ -64,6 +61,7 @@ function updateTask(id, details) {
     taskList[indexToUpdate].title = details.title;
     taskList[indexToUpdate].dueDate = details.dueDate;
     taskList[indexToUpdate].priority = details.priority;
+    taskList[indexToUpdate].projectName = details.projectName;
     taskList[indexToUpdate].description = details.description;
 }
 
