@@ -252,10 +252,7 @@ function populateCreateTaskWithProjectNames(projects) {
         optionForProject.textContent = project;
         selectOption.appendChild(optionForProject);
     })
-
 }
-
-
 
 function displayTasks(tasksList) {
     const taskContainer = document.getElementById('task-container');
@@ -291,6 +288,7 @@ function createTask(task) {
     dueDate.textContent = `Due on: ${task.dueDate}`;
     if (task.completed) {
         checkbox.setAttribute('checked', '');
+        title.classList.add('completed-crossed-out');
         editTaskButton.setAttribute('disabled', '');
         dueDate.textContent = `Completed on: ${task.completedDate}`
         dueDate.classList.add('completed-date');
