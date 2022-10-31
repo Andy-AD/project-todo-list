@@ -63,9 +63,10 @@ function loadOnStart() {
 
     const addTaskDiv = document.createElement('div');
     addTaskDiv.classList.add('add-task');
-    const closeSpan = document.createElement('span');
+    const closeSpan = document.createElement('i');
     closeSpan.classList.add('close');
-    closeSpan.textContent = 'x';
+    closeSpan.classList.add('material-icons')
+    closeSpan.textContent = 'close';
     const modalTaskHeader = document.createElement('h2');
     modalTaskHeader.classList.add('modal-header');
     modalTaskHeader.textContent = "Add new task:"
@@ -147,13 +148,15 @@ function loadOnStart() {
     addProjectDiv.classList.add('add-project');
     const addProjectHeader = document.createElement('h2');
     addProjectHeader.textContent = 'Add Project:';
-    const closeProjectSpan = document.createElement('span');
+    const closeProjectSpan = document.createElement('i');
     closeProjectSpan.classList.add('close');
-    closeProjectSpan.textContent = 'x';
+    closeProjectSpan.classList.add('material-icons')
+    closeProjectSpan.textContent = 'close';
     const projectForm = document.createElement('form');
     projectForm.setAttribute('id', 'create-project');
     projectForm.setAttribute('action', 'post');
     projectForm.setAttribute('method', 'post');
+    projectForm.setAttribute('autocomplete', 'off')
     const inputForProjectTitle = document.createElement('input');
     inputForProjectTitle.setAttribute('type', 'text');
     inputForProjectTitle.setAttribute('id', 'add-project');
