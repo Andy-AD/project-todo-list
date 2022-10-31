@@ -1,13 +1,11 @@
 const path = require('path');
 
 module.exports = {
+    mode: 'production',
     entry: {
         index: './src/index.js',
     },
     devtool: 'inline-source-map',
-    devServer: {
-        static: './dist',
-      },
     output: {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist'),
@@ -15,9 +13,6 @@ module.exports = {
             keep: /index\.html$/i
         }
     },
-    optimization: {
-        runtimeChunk: 'single',
-      },
     module: {
         rules: [
             {
